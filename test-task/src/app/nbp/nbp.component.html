@@ -1,0 +1,58 @@
+<div class="conteiner">
+    <p-toast position="top-left" key="tl"></p-toast>
+    <div class="table">
+        <p-table #dt1 [value]="currencies" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-gridlines" [paginator]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [globalFilterFields]="['name','country.name','representative.name','status']">
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                        (click)="clear(dt1)"></button>
+                    <span class="p-input-icon-left ml-auto">
+                        <i class="pi pi-search"></i>
+                        <p-calendar dateMask [(ngModel)]="dateForTheFilter" [showIcon]="true" inputId="icon" appendTo="body"
+                            dateFormat="yy-mm-dd" (onSelect)="selectedDate()" (onInput)="inputDate($event)">
+                        </p-calendar>
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="code">Symbol waluty <p-sortIcon field="code"></p-sortIcon></th>
+                    <th pSortableColumn="currency">Waluta <p-sortIcon field="currency"></p-sortIcon></th>
+                    <th pSortableColumn="mid">Kurs waluty <p-sortIcon field="mid"></p-sortIcon></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-currency>
+                <tr>
+                    <td>
+                        {{currency.code}}
+                    </td>
+                    <td>
+                        {{currency.currency}}
+                    </td>
+                    <td>
+                        {{currency.mid}}
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="7">No customers found.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <div class="view">
+        <h5>Single Selection</h5>
+        <p-selectButton 
+            [options]="viewOptions" 
+            [(ngModel)]="selectedView" 
+            optionLabel="label" 
+            optionValue="value"
+            (onChange)="changeTheme()"
+        >
+        </p-selectButton>
+    </div>
+</div>
